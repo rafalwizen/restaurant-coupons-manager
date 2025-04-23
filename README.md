@@ -1,54 +1,104 @@
-# React + TypeScript + Vite
+# Restaurant Coupon Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based frontend application for managing restaurant coupons, integrated with a RESTful API. This project provides a foundation with authentication capabilities and is ready for extending with coupon management features.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Authentication System**: Complete login/logout functionality with JWT token management
+- **Protected Routes**: Access control based on authentication state
+- **Responsive Design**: Mobile and desktop friendly UI using Tailwind CSS
+- **Toast Notifications**: User feedback system for actions and errors
+- **Error Handling**: Comprehensive API error handling
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 18** with **TypeScript**
+- **Vite** for build tooling and development server
+- **React Router v6** for routing
+- **Axios** for API requests
+- **Tailwind CSS** for styling
+- **JWT Decode** for token handling
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Project Structure
+
+```
+restaurant-coupons-manager/
+├── public/             # Static assets
+├── src/
+│   ├── api/            # API client and request handling
+│   ├── components/     # Reusable UI components
+│   │   ├── layout/     # Layout components (navbar, footer)
+│   │   ├── routing/    # Route-related components
+│   │   └── ui/         # UI elements (buttons, inputs, etc.)
+│   ├── contexts/       # React contexts (auth, toast)
+│   ├── layouts/        # Page layouts
+│   ├── pages/          # Page components
+│   ├── types/          # TypeScript type definitions
+│   ├── utils/          # Utility functions
+│   ├── App.tsx         # Main App component
+│   ├── main.tsx        # Entry point
+│   ├── router.tsx      # Router configuration
+│   └── index.css       # Global styles and Tailwind imports
+├── tailwind.config.js  # Tailwind configuration
+├── tsconfig.json       # TypeScript configuration
+├── vite.config.ts      # Vite configuration
+└── README.md           # Project documentation
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- Node.js 14.x or higher
+- npm 7.x or higher
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/restaurant-coupons-manager.git
+cd restaurant-coupons-manager
 ```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+This will generate optimized files in the `dist` directory.
+
+## Authentication
+
+The authentication system is built with the following features:
+
+- JWT token storage and management
+- Login form with validation
+- Protected routes that require authentication
+- Automatic redirect to login page for unauthenticated users
+- Role-based access control (admin vs regular user)
+
+## API Integration
+
+The application is set up to communicate with a RESTful API as defined in the OpenAPI specification. API requests are centralized in the `api` directory with proper type definitions.
+
+## Future Development
+
+This project is currently focused on authentication and foundation setup. Planned features for future development include:
+
+- Coupon creation and management
+- Coupon listing and filtering
+- Reports and analytics
+- User management for administrators
