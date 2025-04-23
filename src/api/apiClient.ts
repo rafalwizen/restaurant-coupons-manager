@@ -1,12 +1,11 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ApiResponse, LoginRequestDto, LoginResponseDto } from '../types/api.types';
 import { getToken, removeToken } from '../utils/auth';
-
-const BASE_URL = 'http://localhost:8080/api';
+import env from '../config/env';
 
 // Create axios instance with base configuration
 const axiosInstance: AxiosInstance = axios.create({
-    baseURL: BASE_URL,
+    baseURL: env.API_URL,
     headers: {
         'Content-Type': 'application/json',
     },
