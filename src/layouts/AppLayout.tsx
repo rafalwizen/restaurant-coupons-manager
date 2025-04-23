@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 
 const AppLayout = () => {
     const { loading } = useAuth();
@@ -15,7 +17,11 @@ const AppLayout = () => {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <Outlet />
+            <Navbar />
+            <main className="flex-grow">
+                <Outlet />
+            </main>
+            <Footer />
         </div>
     );
 };
