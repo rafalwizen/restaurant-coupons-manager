@@ -1,20 +1,19 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { ApiResponse, LoginRequestDto, LoginResponseDto } from '../types/api.types';
-import { getToken, removeToken } from '../utils/auth';
-import env from '../config/env';
+import { ApiResponse, LoginRequest, LoginResponse } from '../types/api.types';
+import  env  from '../config/env';
 
 // Create axios instance with base configuration
-const axiosInstance: AxiosInstance = axios.create({
-    baseURL: env.API_URL,
+const apiClient: AxiosInstance = axios.create({
+    baseURL: env.API_URL || 'http://localhost:8080/api',
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 // Add request interceptor to attach auth token
-axiosInstance.interceptors.request.use(
+apiClient.interceptors.request.use(
     (config) => {
-        const token = getToken();
+        const token = localStorage.getItem('authToken');
         if (token && config.headers) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -24,13 +23,20 @@ axiosInstance.interceptors.request.use(
 );
 
 // Add response interceptor to handle common errors
-axiosInstance.interceptors.response.use(
+apiClient.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
         // Handle token expiration
         if (error.response?.status === 401) {
-            removeToken();
-            window.location.href = '/login';
+            // Clear local storage
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+
+            // Only redirect if we're not already on the login page
+            const currentPath = window.location.pathname;
+            if (!currentPath.includes('/login')) {
+                window.location.href = '/login';
+            }
         }
         return Promise.reject(error);
     }
@@ -41,7 +47,7 @@ export const apiRequest = async <T>(
     config: AxiosRequestConfig
 ): Promise<ApiResponse<T>> => {
     try {
-        const response = await axiosInstance(config);
+        const response = await apiClient(config);
         return response.data as ApiResponse<T>;
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -54,8 +60,8 @@ export const apiRequest = async <T>(
 
 // Auth API
 export const authApi = {
-    login: async (credentials: LoginRequestDto): Promise<ApiResponse<LoginResponseDto>> => {
-        return apiRequest<LoginResponseDto>({
+    login: async (credentials: LoginRequest): Promise<ApiResponse<LoginResponse>> => {
+        return apiRequest<LoginResponse>({
             method: 'POST',
             url: '/auth/login',
             data: credentials,
@@ -63,7 +69,7 @@ export const authApi = {
     },
 };
 
-// Public Coupon API (not implemented yet, just API structure)
+// Public Coupon API
 export const couponApi = {
     getAllCoupons: async (page = 0, size = 10, sortBy = 'id', direction = 'asc') => {
         return apiRequest({
@@ -81,7 +87,9 @@ export const couponApi = {
     },
 };
 
-// Admin Coupon API (not implemented yet, just API structure)
+// Admin Coupon API (for future implementation)
 export const adminCouponApi = {
     // Will implement when needed
 };
+
+export { apiClient };

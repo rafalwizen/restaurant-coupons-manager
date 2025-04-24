@@ -6,6 +6,23 @@ export interface ApiResponse<T = any> {
     timestamp: string;
 }
 
+// Auth DTOs
+export interface LoginRequest {
+    username: string;
+    password: string;
+}
+
+export interface LoginResponse {
+    token: string;
+    username: string;
+    role: string;
+}
+
+export interface User {
+    username: string;
+    role: string;
+}
+
 // Coupon DTOs
 export interface CouponSummaryDto {
     id: number;
@@ -42,18 +59,6 @@ export interface CouponUpdateDto {
     validTo?: string;
     termsAndConditions?: string;
     isActive?: boolean;
-}
-
-// Auth DTOs
-export interface LoginRequestDto {
-    username: string;
-    password: string;
-}
-
-export interface LoginResponseDto {
-    token: string;
-    username: string;
-    role: string;
 }
 
 // Pagination options

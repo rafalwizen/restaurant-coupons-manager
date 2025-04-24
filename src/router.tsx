@@ -1,13 +1,17 @@
-import { createBrowserRouter, RouteObject } from 'react-router-dom';
-import ProtectedRoute from './components/routing/ProtectedRoute';
+import { createBrowserRouter } from 'react-router-dom';
 import AppLayout from './layouts/AppLayout';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 import NotFoundPage from './pages/NotFoundPage';
+import ProtectedRoute from './components/routing/ProtectedRoute';
+import CouponListPage from './pages/CouponListPage';
+import CouponDetailPage from './pages/CouponDetailPage';
+import CreateCouponPage from './pages/CreateCouponPage';
+import EditCouponPage from './pages/EditCouponPage';
 
-const routes: RouteObject[] = [
+const router = createBrowserRouter([
     {
         path: '/',
         element: <AppLayout />,
@@ -18,31 +22,56 @@ const routes: RouteObject[] = [
                 element: <HomePage />,
             },
             {
-                path: 'login',
+                path: '/login',
                 element: <LoginPage />,
             },
             {
-                path: 'unauthorized',
+                path: '/unauthorized',
                 element: <UnauthorizedPage />,
             },
 
-            // Protected routes (require auth)
+            // Protected routes
             {
-                element: <ProtectedRoute />,
-                children: [
-                    {
-                        path: 'dashboard',
-                        element: <DashboardPage />,
-                    },
-                ],
+                path: '/dashboard',
+                element: (
+                    <ProtectedRoute>
+                        <DashboardPage />
+                    </ProtectedRoute>
+                ),
             },
 
-            // Protected admin routes (require admin role)
+            // Admin routes
             {
-                element: <ProtectedRoute requireAdmin={true} />,
-                children: [
-                    // Admin routes will go here when implementing coupon management
-                ],
+                path: '/admin/coupons',
+                element: (
+                    <ProtectedRoute requiredRole="ADMIN">
+                        <CouponListPage />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: '/admin/coupons/new',
+                element: (
+                    <ProtectedRoute requiredRole="ADMIN">
+                        <CreateCouponPage />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: '/admin/coupons/:id',
+                element: (
+                    <ProtectedRoute requiredRole="ADMIN">
+                        <CouponDetailPage />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: '/admin/coupons/:id/edit',
+                element: (
+                    <ProtectedRoute requiredRole="ADMIN">
+                        <EditCouponPage />
+                    </ProtectedRoute>
+                ),
             },
 
             // 404 route
@@ -52,6 +81,6 @@ const routes: RouteObject[] = [
             },
         ],
     },
-];
+]);
 
-export const router = createBrowserRouter(routes);
+export default router;

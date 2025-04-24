@@ -1,30 +1,36 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import LoadingSpinner from '../ui/LoadingSpinner';
 
 interface ProtectedRouteProps {
-    requireAdmin?: boolean;
+    children: React.ReactNode;
+    requiredRole?: string;
 }
 
-const ProtectedRoute = ({ requireAdmin = false }: ProtectedRouteProps) => {
-    const { isLoggedIn, userRole, loading } = useAuth();
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+                                                           children,
+                                                           requiredRole
+                                                       }) => {
+    const { user, isLoggedIn, isLoading } = useAuth();
     const location = useLocation();
 
-    if (loading) {
+    if (isLoading) {
         return <LoadingSpinner />;
     }
 
-    // Check if user is logged in
-    if (!isLoggedIn) {
+    // If not authenticated, redirect to login with return path
+    if (!isLoggedIn || !user) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    // Check if admin role is required but user doesn't have it
-    if (requireAdmin && userRole !== 'ADMIN') {
+    // If role is required and user doesn't have it, redirect to unauthorized
+    if (requiredRole && user.role !== requiredRole) {
         return <Navigate to="/unauthorized" replace />;
     }
 
-    return <Outlet />;
+    // User is authenticated and has required role (if any)
+    return <>{children}</>;
 };
 
 export default ProtectedRoute;
