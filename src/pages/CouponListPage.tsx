@@ -5,11 +5,13 @@ import { couponService } from '../api/couponService';
 import Button from '../components/ui/Button';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import ErrorDisplay from '../components/ui/ErrorDisplay';
+import ConfirmationDialog from '../components/ui/ConfirmationDialog';
 import { useToast } from '../contexts/ToastContext';
 
 const CouponListPage: React.FC = () => {
     const [coupons, setCoupons] = useState<CouponSummary[]>([]);
     const [loading, setLoading] = useState(true);
+    const [deleteLoading, setDeleteLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [params, setParams] = useState<CouponListParams>({
@@ -18,6 +20,9 @@ const CouponListPage: React.FC = () => {
         sortBy: 'id',
         direction: 'asc'
     });
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [couponToDelete, setCouponToDelete] = useState<number | null>(null);
+
     const navigate = useNavigate();
     const { showToast } = useToast();
 
@@ -56,23 +61,34 @@ const CouponListPage: React.FC = () => {
         setParams(prevParams => ({ ...prevParams, page: newPage }));
     };
 
-    const handleDelete = async (id: number) => {
-        if (window.confirm('Are you sure you want to delete this coupon?')) {
-            try {
-                setLoading(true);
-                const response = await couponService.deleteCoupon(id);
-                if (response.success) {
-                    setCoupons(coupons.filter(coupon => coupon.id !== id));
-                    showToast('Coupon deleted successfully', 'success');
-                } else {
-                    showToast(response.message || 'Failed to delete coupon', 'error');
-                }
-            } catch (err) {
-                showToast('An error occurred while deleting the coupon', 'error');
-                console.error(err);
-            } finally {
-                setLoading(false);
+    const openDeleteDialog = (id: number) => {
+        setCouponToDelete(id);
+        setDeleteDialogOpen(true);
+    };
+
+    const closeDeleteDialog = () => {
+        setDeleteDialogOpen(false);
+        setCouponToDelete(null);
+    };
+
+    const confirmDelete = async () => {
+        if (couponToDelete === null) return;
+
+        try {
+            setDeleteLoading(true);
+            const response = await couponService.deleteCoupon(couponToDelete);
+            if (response.success) {
+                setCoupons(coupons.filter(coupon => coupon.id !== couponToDelete));
+                showToast('Coupon deleted successfully', 'success');
+            } else {
+                showToast(response.message || 'Failed to delete coupon', 'error');
             }
+        } catch (err) {
+            showToast('An error occurred while deleting the coupon', 'error');
+            console.error(err);
+        } finally {
+            setDeleteLoading(false);
+            closeDeleteDialog();
         }
     };
 
@@ -155,7 +171,7 @@ const CouponListPage: React.FC = () => {
                                                 Edit
                                             </Button>
                                             <Button
-                                                onClick={() => handleDelete(coupon.id)}
+                                                onClick={() => openDeleteDialog(coupon.id)}
                                                 className="bg-red-600 hover:bg-red-700"
                                             >
                                                 Delete
@@ -193,6 +209,17 @@ const CouponListPage: React.FC = () => {
                     </div>
                 </>
             )}
+
+            <ConfirmationDialog
+                isOpen={deleteDialogOpen}
+                title="Delete Coupon"
+                message="Are you sure you want to delete this coupon? This action cannot be undone."
+                confirmLabel="Delete"
+                cancelLabel="Cancel"
+                onConfirm={confirmDelete}
+                onCancel={closeDeleteDialog}
+                isConfirmLoading={deleteLoading}
+            />
         </div>
     );
 };
