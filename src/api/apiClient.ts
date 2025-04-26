@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ApiResponse, LoginRequest, LoginResponse } from '../types/api.types';
-import  env  from '../config/env';
+import env from '../config/env';
 
 // Create axios instance with base configuration
 const apiClient: AxiosInstance = axios.create({
@@ -42,6 +42,11 @@ apiClient.interceptors.response.use(
     }
 );
 
+// Get base URL (added method)
+const getBaseUrl = (): string => {
+    return env.API_URL || 'http://localhost:8080/api';
+};
+
 // Generic API request handler with proper typing
 export const apiRequest = async <T>(
     config: AxiosRequestConfig
@@ -57,6 +62,9 @@ export const apiRequest = async <T>(
         throw error;
     }
 };
+
+// Add the getBaseUrl method to apiRequest
+apiRequest.getBaseUrl = getBaseUrl;
 
 // Auth API
 export const authApi = {
@@ -85,11 +93,6 @@ export const couponApi = {
             url: `/coupons/${id}`,
         });
     },
-};
-
-// Admin Coupon API (for future implementation)
-export const adminCouponApi = {
-    // Will implement when needed
 };
 
 export { apiClient };

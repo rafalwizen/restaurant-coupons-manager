@@ -26,7 +26,10 @@ const Navbar: React.FC = () => {
 
                             {/* Only show for admin users */}
                             {user.role === 'ADMIN' && (
-                                <Link to="/admin/coupons" className="hover:text-blue-200">Manage Coupons</Link>
+                                <>
+                                    <Link to="/admin/coupons" className="hover:text-blue-200">Manage Coupons</Link>
+                                    <Link to="/admin/images" className="hover:text-blue-200">Manage Images</Link>
+                                </>
                             )}
 
                             <div className="flex items-center space-x-4">
@@ -94,12 +97,20 @@ const Navbar: React.FC = () => {
                             </Link>
 
                             {user.role === 'ADMIN' && (
-                                <Link
-                                    to="/admin/coupons"
-                                    className="border-transparent text-gray-200 hover:bg-blue-800 block pl-3 pr-4 py-2 text-base font-medium"
-                                >
-                                    Manage Coupons
-                                </Link>
+                                <>
+                                    <Link
+                                        to="/admin/coupons"
+                                        className="border-transparent text-gray-200 hover:bg-blue-800 block pl-3 pr-4 py-2 text-base font-medium"
+                                    >
+                                        Manage Coupons
+                                    </Link>
+                                    <Link
+                                        to="/admin/images"
+                                        className="border-transparent text-gray-200 hover:bg-blue-800 block pl-3 pr-4 py-2 text-base font-medium"
+                                    >
+                                        Manage Images
+                                    </Link>
+                                </>
                             )}
 
                             <div className="px-4 py-2">

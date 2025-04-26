@@ -10,6 +10,7 @@ import CouponListPage from './pages/CouponListPage';
 import CouponDetailPage from './pages/CouponDetailPage';
 import CreateCouponPage from './pages/CreateCouponPage';
 import EditCouponPage from './pages/EditCouponPage';
+import ImageManagerPage from './pages/ImageManagerPage';
 
 const router = createBrowserRouter([
     {
@@ -70,6 +71,16 @@ const router = createBrowserRouter([
                 element: (
                     <ProtectedRoute requiredRole="ADMIN">
                         <EditCouponPage />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: '/admin/images',
+                element: (
+                    <ProtectedRoute requiredRole="ADMIN">
+                        {/*<AppLayout>*/}
+                            <ImageManagerPage />
+                        {/*</AppLayout>*/}
                     </ProtectedRoute>
                 ),
             },
