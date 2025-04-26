@@ -102,20 +102,24 @@ const CouponDetailPage: React.FC = () => {
 
                             <div className="font-medium">Status:</div>
                             <div className="col-span-2">
-                <span className={`px-2 py-1 rounded text-white ${coupon.isActive ? 'bg-green-500' : 'bg-red-500'}`}>
-                  {coupon.isActive ? 'Active' : 'Inactive'}
-                </span>
+                                <span className={`px-2 py-1 rounded text-white ${coupon.isActive ? 'bg-green-500' : 'bg-red-500'}`}>
+                                    {coupon.isActive ? 'Active' : 'Inactive'}
+                                </span>
                             </div>
                         </div>
 
-                        <h2 className="text-lg font-semibold mb-2">Validity Period</h2>
-                        <div className="grid grid-cols-3 gap-2 mb-4">
-                            <div className="font-medium">Valid From:</div>
-                            <div className="col-span-2">{new Date(coupon.validFrom).toLocaleString()}</div>
-
-                            <div className="font-medium">Valid To:</div>
-                            <div className="col-span-2">{new Date(coupon.validTo).toLocaleString()}</div>
-                        </div>
+                        <h2 className="text-lg font-semibold mb-2 mt-6">Coupon Image</h2>
+                        {coupon.imageId && coupon.imageUrl ? (
+                            <div className="border rounded p-2 bg-gray-50">
+                                <img
+                                    src={coupon.imageUrl}
+                                    alt={coupon.name}
+                                    className="max-w-full h-auto max-h-48 object-contain"
+                                />
+                            </div>
+                        ) : (
+                            <p className="text-gray-500 italic">No image associated with this coupon</p>
+                        )}
                     </div>
 
                     <div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CouponCreate, CouponDetail } from '../../types/coupon.types';
 import FormInput from '../ui/FormInput';
 import Button from '../ui/Button';
+import ImageSelector from "../images/ImageSelector.tsx";
 
 interface CouponFormProps {
     initialValues?: CouponDetail;
@@ -26,7 +27,8 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
         validFrom: initialValues?.validFrom ? initialValues.validFrom.substring(0, 16) : '',
         validTo: initialValues?.validTo ? initialValues.validTo.substring(0, 16) : '',
         termsAndConditions: initialValues?.termsAndConditions || '',
-        isActive: initialValues?.isActive !== undefined ? initialValues.isActive : true
+        isActive: initialValues?.isActive !== undefined ? initialValues.isActive : true,
+        imageId: initialValues?.imageId || undefined
     });
 
     const [errors, setErrors] = useState<ValidationErrors>({});
@@ -90,6 +92,10 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
         return Object.keys(newErrors).length === 0;
     };
 
+    const handleImageSelect = (imageId: number | null) => {
+        setValues(prev => ({ ...prev, imageId: imageId || undefined }));
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
@@ -116,6 +122,16 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
                 required
                 maxLength={100}
             />
+
+            <div className="mt-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Coupon Image (optional)
+                </label>
+                <ImageSelector
+                    selectedImageId={values.imageId}
+                    onImageSelect={handleImageSelect}
+                />
+            </div>
 
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">

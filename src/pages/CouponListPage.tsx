@@ -155,7 +155,23 @@ const CouponListPage: React.FC = () => {
                                 filteredCoupons.map(coupon => (
                                     <tr key={coupon.id} className="hover:bg-gray-50">
                                         <td className="py-2 px-4 border-b">{coupon.id}</td>
-                                        <td className="py-2 px-4 border-b">{coupon.name}</td>
+                                        <td className="py-2 px-4 border-b">
+                                            <div className="flex items-center">
+                                                {coupon.imageId && (
+                                                    <div className="mr-2 w-10 h-10 flex-shrink-0">
+                                                        <img
+                                                            src={`/api/images/${coupon.imageId}/content`}
+                                                            alt={coupon.name}
+                                                            className="w-10 h-10 object-cover rounded"
+                                                            onError={(e) => {
+                                                                (e.target as HTMLImageElement).style.display = 'none';
+                                                            }}
+                                                        />
+                                                    </div>
+                                                )}
+                                                {coupon.name}
+                                            </div>
+                                        </td>
                                         <td className="py-2 px-4 border-b">{coupon.discountValue}%</td>
                                         <td className="py-2 px-4 border-b flex gap-2">
                                             <Button
