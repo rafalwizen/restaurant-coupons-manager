@@ -1,9 +1,8 @@
-// src/pages/DashboardPage.tsx
 import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/ui/Button';
 
 const DashboardPage = () => {
-    const { username, logout } = useAuth();
+    const { user, logout } = useAuth();
 
     return (
         <div className="bg-gray-50 min-h-screen">
@@ -11,7 +10,7 @@ const DashboardPage = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
                     <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
                     <div className="flex items-center">
-                        <span className="mr-4 text-gray-600">Welcome, {username}</span>
+                        <span className="mr-4 text-gray-600">Welcome, {user?.username}</span>
                         <Button variant="outline" size="small" onClick={logout}>
                             Logout
                         </Button>

@@ -5,9 +5,9 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 
 const AppLayout = () => {
-    const { loading } = useAuth();
+    const { isLoading } = useAuth();
 
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <LoadingSpinner size="large" />
