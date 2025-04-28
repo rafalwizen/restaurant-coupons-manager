@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../ui/Button';
 import ImageList from './ImageList';
+import {imageService} from "../../api/imageService.ts";
 
 interface ImageSelectorProps {
     selectedImageId?: number;
@@ -57,7 +58,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ selectedImageId, onImageS
                     <p className="text-sm mb-1">Selected Image:</p>
                     <div className="h-32 w-32 overflow-hidden border rounded flex items-center justify-center bg-white">
                         <img
-                            src={`/api/images/${selectedImageId}/content`}
+                            src={imageService.getImageUrl(selectedImageId)}
                             alt="Selected"
                             className="max-h-full max-w-full object-contain"
                         />
