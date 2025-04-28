@@ -96,7 +96,7 @@ const ImageList: React.FC<ImageListProps> = ({
                         >
                             <div className="h-40 overflow-hidden bg-gray-100 flex items-center justify-center">
                                 <img
-                                    src={`/api/images/${image.id}/content`}
+                                    src={imageService.getImageUrl(image.id)}
                                     alt={image.fileName}
                                     className="w-full h-full object-contain"
                                 />
