@@ -8,11 +8,16 @@ export const couponService = {
      */
     getCoupons: async (params: CouponListParams = {}): Promise<ApiResponse<CouponSummary[]>> => {
         const { page = 0, size = 10, sortBy = 'id', direction = 'asc' } = params;
-        return apiRequest<CouponSummary[]>({
+        const response = await apiRequest<any>({
             method: 'GET',
             url: '/admin/coupons',
             params: { page, size, sortBy, direction },
         });
+
+        return {
+            ...response,
+            data: response.data.content,
+        };
     },
 
     /**
@@ -21,7 +26,7 @@ export const couponService = {
     getCouponById: async (id: number): Promise<ApiResponse<CouponDetail>> => {
         return apiRequest<CouponDetail>({
             method: 'GET',
-            url: `/admin/coupons/${id}`,
+            url: `/coupons/${id}`,
         });
     },
 
