@@ -17,8 +17,8 @@ const HomePage = () => {
                     </p>
                     <div className="mt-8 flex justify-center">
                         {isLoggedIn ? (
-                            <Link to="/dashboard">
-                                <Button size="large">Go to Dashboard</Button>
+                            <Link to="/admin/coupons">
+                                <Button size="large">Manage coupons</Button>
                             </Link>
                         ) : (
                             <Link to="/login">

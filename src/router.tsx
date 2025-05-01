@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import AppLayout from './layouts/AppLayout';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ProtectedRoute from './components/routing/ProtectedRoute';
@@ -29,16 +28,6 @@ const router = createBrowserRouter([
             {
                 path: '/unauthorized',
                 element: <UnauthorizedPage />,
-            },
-
-            // Protected routes
-            {
-                path: '/dashboard',
-                element: (
-                    <ProtectedRoute>
-                        <DashboardPage />
-                    </ProtectedRoute>
-                ),
             },
 
             // Admin routes

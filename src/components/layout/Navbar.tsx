@@ -22,8 +22,6 @@ const Navbar: React.FC = () => {
 
                     {isLoggedIn && user ? (
                         <>
-                            <Link to="/dashboard" className="hover:text-blue-200">Dashboard</Link>
-
                             {/* Only show for admin users */}
                             {user.role === 'ADMIN' && (
                                 <>
@@ -89,13 +87,6 @@ const Navbar: React.FC = () => {
 
                     {isLoggedIn && user ? (
                         <>
-                            <Link
-                                to="/dashboard"
-                                className="border-transparent text-gray-200 hover:bg-blue-800 block pl-3 pr-4 py-2 text-base font-medium"
-                            >
-                                Dashboard
-                            </Link>
-
                             {user.role === 'ADMIN' && (
                                 <>
                                     <Link
