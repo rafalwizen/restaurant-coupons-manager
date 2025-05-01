@@ -33,7 +33,6 @@ const Navbar: React.FC = () => {
                                 <span className="text-sm">Welcome, {user.username}</span>
                                 <Button
                                     onClick={handleLogout}
-                                    className="bg-primary-900 hover:bg-primary-800"
                                 >
                                     Logout
                                 </Button>
@@ -107,7 +106,6 @@ const Navbar: React.FC = () => {
                                 <div className="text-sm text-muted-text mb-2">Welcome, {user.username}</div>
                                 <Button
                                     onClick={handleLogout}
-                                    className="bg-danger hover:bg-danger-dark w-full"
                                 >
                                     Logout
                                 </Button>

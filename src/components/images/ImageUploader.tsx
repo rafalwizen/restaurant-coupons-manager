@@ -109,7 +109,6 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onSuccess }) => {
                     <Button
                         type="submit"
                         disabled={uploading || !file}
-                        className="bg-green-600 hover:bg-green-700"
                     >
                         {uploading ? 'Uploading...' : 'Upload Image'}
                     </Button>

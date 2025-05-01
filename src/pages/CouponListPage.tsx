@@ -102,7 +102,6 @@ const CouponListPage: React.FC = () => {
                 <h1 className="text-2xl font-bold">Coupon Management</h1>
                 <Button
                     onClick={() => navigate('/admin/coupons/new')}
-                    className="bg-primary-600 hover:bg-primary-700"
                 >
                     Add New Coupon
                 </Button>
@@ -174,19 +173,16 @@ const CouponListPage: React.FC = () => {
                                         <td className="py-2 px-4 border-b flex gap-2">
                                             <Button
                                                 onClick={() => navigate(`/admin/coupons/${coupon.id}`)}
-                                                className="bg-primary-500 hover:bg-primary-700"
                                             >
                                                 View
                                             </Button>
                                             <Button
                                                 onClick={() => navigate(`/admin/coupons/${coupon.id}/edit`)}
-                                                className="bg-primary-500 hover:bg-primary-600"
                                             >
                                                 Edit
                                             </Button>
                                             <Button
                                                 onClick={() => openDeleteDialog(coupon.id)}
-                                                className="bg-primary-500 hover:bg-primary-800"
                                             >
                                                 Delete
                                             </Button>
@@ -208,7 +204,6 @@ const CouponListPage: React.FC = () => {
                         <Button
                             onClick={() => handlePageChange(Math.max(0, params.page! - 1))}
                             disabled={params.page === 0}
-                            className="bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300"
                         >
                             Previous
                         </Button>
@@ -216,7 +211,6 @@ const CouponListPage: React.FC = () => {
                         <Button
                             onClick={() => handlePageChange(params.page! + 1)}
                             disabled={filteredCoupons.length < params.size!}
-                            className="bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300"
                         >
                             Next
                         </Button>

@@ -29,7 +29,6 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ selectedImageId, onImageS
             <div className="flex items-center space-x-2">
                 <Button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="bg-blue-600 hover:bg-blue-700"
                 >
                     {isOpen ? 'Hide Image Gallery' : 'Select an Image'}
                 </Button>
@@ -46,7 +45,6 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ selectedImageId, onImageS
                 {isOpen && (
                     <Button
                         onClick={handleRefresh}
-                        className="bg-green-600 hover:bg-green-700"
                     >
                         Refresh Images
                     </Button>

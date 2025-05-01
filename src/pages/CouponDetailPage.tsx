@@ -71,19 +71,16 @@ const CouponDetailPage: React.FC = () => {
                     <div className="flex gap-2">
                         <Button
                             onClick={() => navigate('/admin/coupons')}
-                            className="bg-gray-600 hover:bg-gray-700"
                         >
                             Back to List
                         </Button>
                         <Button
                             onClick={() => navigate(`/admin/coupons/${id}/edit`)}
-                            className="bg-yellow-600 hover:bg-yellow-700"
                         >
                             Edit
                         </Button>
                         <Button
                             onClick={handleDelete}
-                            className="bg-red-600 hover:bg-red-700"
                         >
                             Delete
                         </Button>

@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({
                                            size = 'medium',
                                            fullWidth = false,
                                            isLoading = false,
-                                           className = '',
+                                           className = 'bg-primary-500 hover:bg-primary-800 disabled:bg-primary-300',
                                            disabled,
                                            type = 'button',
                                            ...props

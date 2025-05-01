@@ -39,7 +39,6 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
                     </Button>
                     <Button
                         onClick={onConfirm}
-                        className="bg-red-600 hover:bg-red-700"
                         disabled={isConfirmLoading}
                     >
                         {isConfirmLoading ? 'Processing...' : confirmLabel}

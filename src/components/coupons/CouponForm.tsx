@@ -220,7 +220,6 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
                 <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-blue-600 hover:bg-blue-700"
                 >
                     {isSubmitting ? 'Saving...' : (initialValues ? 'Update Coupon' : 'Create Coupon')}
                 </Button>

@@ -91,8 +91,9 @@ const ImageList: React.FC<ImageListProps> = ({
                     {images.map((image) => (
                         <div
                             key={image.id}
-                            className={`border rounded-lg overflow-hidden bg-white shadow-sm
-                                ${selectedImageId === image.id ? 'ring-2 ring-blue-500' : ''}`}
+                            className={`border rounded-lg overflow-hidden bg-white shadow-sm ${
+                                selectedImageId === image.id ? 'ring-2 ring-primary-500' : ''
+                            }`}
                         >
                             <div className="h-40 overflow-hidden bg-gray-100 flex items-center justify-center">
                                 <img
@@ -115,18 +116,12 @@ const ImageList: React.FC<ImageListProps> = ({
                                     {showSelectButton && onSelectImage && (
                                         <Button
                                             onClick={() => onSelectImage(image.id)}
-                                            className={`text-xs py-1 px-2 ${
-                                                selectedImageId === image.id
-                                                    ? 'bg-blue-700'
-                                                    : 'bg-blue-600 hover:bg-blue-700'
-                                            }`}
                                         >
                                             {selectedImageId === image.id ? 'Selected' : 'Select'}
                                         </Button>
                                     )}
                                     <Button
                                         onClick={() => handleDeleteClick(image.id)}
-                                        className="text-xs py-1 px-2 bg-red-600 hover:bg-red-700"
                                     >
                                         Delete
                                     </Button>
