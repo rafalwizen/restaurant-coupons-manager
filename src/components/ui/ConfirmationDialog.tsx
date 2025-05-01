@@ -16,8 +16,8 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
                                                                    isOpen,
                                                                    title,
                                                                    message,
-                                                                   confirmLabel = 'Confirm',
-                                                                   cancelLabel = 'Cancel',
+                                                                   confirmLabel = 'Potwierdź',
+                                                                   cancelLabel = 'Anuluj',
                                                                    onConfirm,
                                                                    onCancel,
                                                                    isConfirmLoading = false
@@ -41,7 +41,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
                         onClick={onConfirm}
                         disabled={isConfirmLoading}
                     >
-                        {isConfirmLoading ? 'Processing...' : confirmLabel}
+                        {isConfirmLoading ? 'Przetwarzanie...' : confirmLabel}
                     </Button>
                 </div>
             </div>

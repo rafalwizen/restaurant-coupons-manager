@@ -39,7 +39,7 @@ const ImageList: React.FC<ImageListProps> = ({
                 setError(response.message || 'Failed to fetch images');
             }
         } catch (error) {
-            setError('Error loading images');
+            setError('Błąd ładowania obrazów');
             console.error(error);
         } finally {
             setLoading(false);
@@ -63,12 +63,12 @@ const ImageList: React.FC<ImageListProps> = ({
             const response = await imageService.deleteImage(imageToDelete);
             if (response.success) {
                 setImages(images.filter(img => img.id !== imageToDelete));
-                showToast('Image deleted successfully', 'success');
+                showToast('Obraz usunięty pomyślnie', 'success');
             } else {
-                showToast(response.message || 'Failed to delete image', 'error');
+                showToast(response.message || 'Nie udało się usunąć obrazu', 'error');
             }
         } catch (error) {
-            showToast('Error deleting image', 'error');
+            showToast('Błąd podczas usuwania obrazu', 'error');
             console.error(error);
         } finally {
             setIsDeleting(false);
@@ -82,10 +82,10 @@ const ImageList: React.FC<ImageListProps> = ({
 
     return (
         <div>
-            <h2 className="text-xl font-semibold mb-4">Available Images</h2>
+            <h2 className="text-xl font-semibold mb-4">Dostępne obrazy</h2>
 
             {images.length === 0 ? (
-                <p className="text-gray-500">No images available.</p>
+                <p className="text-gray-500">Brak dostępnych obrazów.</p>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {images.map((image) => (
@@ -110,20 +110,20 @@ const ImageList: React.FC<ImageListProps> = ({
                                     {(image.fileSize / 1024).toFixed(1)} KB • {image.fileType}
                                 </p>
                                 <p className="text-xs text-gray-700 truncate" title={image.description || ''}>
-                                    {image.description || 'No description'}
+                                    {image.description || 'Brak opisu'}
                                 </p>
                                 <div className="mt-2 flex space-x-2">
                                     {showSelectButton && onSelectImage && (
                                         <Button
                                             onClick={() => onSelectImage(image.id)}
                                         >
-                                            {selectedImageId === image.id ? 'Selected' : 'Select'}
+                                            {selectedImageId === image.id ? 'Wybrano' : 'Wybierz'}
                                         </Button>
                                     )}
                                     <Button
                                         onClick={() => handleDeleteClick(image.id)}
                                     >
-                                        Delete
+                                        Usuń
                                     </Button>
                                 </div>
                             </div>
@@ -134,10 +134,10 @@ const ImageList: React.FC<ImageListProps> = ({
 
             <ConfirmationDialog
                 isOpen={deleteDialogOpen}
-                title="Delete Image"
-                message="Are you sure you want to delete this image? If this image is associated with any coupons, the association will be removed."
-                confirmLabel="Delete"
-                cancelLabel="Cancel"
+                title="Usuń obraz"
+                message="Czy na pewno chcesz usunąć ten obraz? Jeśli jest on powiązany z jakimikolwiek kuponami, powiązanie zostanie usunięte."
+                confirmLabel="Usuń"
+                cancelLabel="Anuluj"
                 onConfirm={confirmDelete}
                 onCancel={() => setDeleteDialogOpen(false)}
                 isConfirmLoading={isDeleting}

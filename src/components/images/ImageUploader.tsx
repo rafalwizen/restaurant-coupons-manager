@@ -36,7 +36,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onSuccess }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!file) {
-            showToast('Please select a file to upload', 'error');
+            showToast('Wybierz plik do przesłania', 'error');
             return;
         }
 
@@ -45,7 +45,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onSuccess }) => {
             const response = await imageService.uploadImage(file, description);
 
             if (response.success) {
-                showToast('Image uploaded successfully', 'success');
+                showToast('Obraz przesłany pomyślnie', 'success');
                 setFile(null);
                 setDescription('');
                 setPreviewUrl(null);
@@ -57,10 +57,10 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onSuccess }) => {
                 // Call the success callback if provided
                 if (onSuccess) onSuccess();
             } else {
-                showToast(response.message || 'Failed to upload image', 'error');
+                showToast(response.message || 'Nie udało się przesłać obrazu', 'error');
             }
         } catch (error) {
-            showToast('Error uploading image', 'error');
+            showToast('Wystąpił błąd podczas przesyłania obrazu', 'error');
             console.error(error);
         } finally {
             setUploading(false);
@@ -69,12 +69,12 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onSuccess }) => {
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Upload New Image</h2>
+            <h2 className="text-xl font-semibold mb-4">Prześlij nowy obraz</h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Image File
+                        Plik obrazu
                     </label>
                     <input
                         id="fileInput"
@@ -87,7 +87,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onSuccess }) => {
                 </div>
 
                 <FormInput
-                    label="Description (optional)"
+                    label="Opis (opcjonalnie)"
                     name="description"
                     value={description}
                     onChange={handleDescriptionChange}
@@ -96,10 +96,10 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onSuccess }) => {
 
                 {previewUrl && (
                     <div className="mt-2">
-                        <p className="text-sm font-medium text-gray-700 mb-1">Preview:</p>
+                        <p className="text-sm font-medium text-gray-700 mb-1">Podgląd:</p>
                         <img
                             src={previewUrl}
-                            alt="Preview"
+                            alt="Podgląd"
                             className="max-h-40 rounded border"
                         />
                     </div>
@@ -110,7 +110,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onSuccess }) => {
                         type="submit"
                         disabled={uploading || !file}
                     >
-                        {uploading ? 'Uploading...' : 'Upload Image'}
+                        {uploading ? 'Przesyłanie...' : 'Prześlij obraz'}
                     </Button>
                 </div>
             </form>

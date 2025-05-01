@@ -30,7 +30,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ selectedImageId, onImageS
                 <Button
                     onClick={() => setIsOpen(!isOpen)}
                 >
-                    {isOpen ? 'Hide Image Gallery' : 'Select an Image'}
+                    {isOpen ? 'Ukryj galerię obrazów' : 'Wybierz obraz'}
                 </Button>
 
                 {selectedImageId && (
@@ -38,7 +38,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ selectedImageId, onImageS
                         onClick={handleClearSelection}
                         className="bg-gray-600 hover:bg-gray-700"
                     >
-                        Clear Selection
+                        Wyczyść wybór
                     </Button>
                 )}
 
@@ -46,18 +46,18 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ selectedImageId, onImageS
                     <Button
                         onClick={handleRefresh}
                     >
-                        Refresh Images
+                        Odśwież obrazy
                     </Button>
                 )}
             </div>
 
             {selectedImageId && (
                 <div className="mt-2 p-2 border rounded bg-gray-50">
-                    <p className="text-sm mb-1">Selected Image:</p>
+                    <p className="text-sm mb-1">Wybrany obraz:</p>
                     <div className="h-32 w-32 overflow-hidden border rounded flex items-center justify-center bg-white">
                         <img
                             src={imageService.getImageUrl(selectedImageId)}
-                            alt="Selected"
+                            alt="Wybrany"
                             className="max-h-full max-w-full object-contain"
                         />
                     </div>

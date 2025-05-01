@@ -26,10 +26,10 @@ const CouponDetailPage: React.FC = () => {
                 if (response.success) {
                     setCoupon(response.data as CouponDetail);
                 } else {
-                    setError(response.message || 'Failed to fetch coupon details');
+                    setError(response.message || 'Nie udało się pobrać szczegółów kuponu.');
                 }
             } catch (err) {
-                setError('An error occurred while fetching coupon details');
+                setError('Wystąpił błąd podczas pobierania szczegółów kuponu.');
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -40,19 +40,19 @@ const CouponDetailPage: React.FC = () => {
     }, [id]);
 
     const handleDelete = async () => {
-        if (!id || !window.confirm('Are you sure you want to delete this coupon?')) return;
+        if (!id || !window.confirm('Czy na pewno chcesz usunąć ten kupon?')) return;
 
         try {
             setLoading(true);
             const response = await couponService.deleteCoupon(parseInt(id));
             if (response.success) {
-                showToast('Coupon deleted successfully', 'success');
+                showToast('Kupon został pomyślnie usunięty.', 'success');
                 navigate('/admin/coupons');
             } else {
-                showToast(response.message || 'Failed to delete coupon', 'error');
+                showToast(response.message || 'Nie udało się usunąć kuponu.', 'error');
             }
         } catch (err) {
-            showToast('An error occurred while deleting the coupon', 'error');
+            showToast('Wystąpił błąd podczas usuwania kuponu.', 'error');
             console.error(err);
         } finally {
             setLoading(false);
@@ -61,7 +61,7 @@ const CouponDetailPage: React.FC = () => {
 
     if (loading) return <LoadingSpinner />;
     if (error) return <ErrorDisplay message={error} />;
-    if (!coupon) return <ErrorDisplay message="Coupon not found" />;
+    if (!coupon) return <ErrorDisplay message="Nie znaleziono kuponu." />;
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -69,43 +69,37 @@ const CouponDetailPage: React.FC = () => {
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">{coupon.name}</h1>
                     <div className="flex gap-2">
-                        <Button
-                            onClick={() => navigate('/admin/coupons')}
-                        >
-                            Back to List
+                        <Button onClick={() => navigate('/admin/coupons')}>
+                            Powrót do listy
                         </Button>
-                        <Button
-                            onClick={() => navigate(`/admin/coupons/${id}/edit`)}
-                        >
-                            Edit
+                        <Button onClick={() => navigate(`/admin/coupons/${id}/edit`)}>
+                            Edytuj
                         </Button>
-                        <Button
-                            onClick={handleDelete}
-                        >
-                            Delete
+                        <Button onClick={handleDelete}>
+                            Usuń
                         </Button>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <h2 className="text-lg font-semibold mb-2">Basic Information</h2>
+                        <h2 className="text-lg font-semibold mb-2">Podstawowe informacje</h2>
                         <div className="grid grid-cols-3 gap-2 mb-4">
                             <div className="font-medium">ID:</div>
                             <div className="col-span-2">{coupon.id}</div>
 
-                            <div className="font-medium">Discount:</div>
+                            <div className="font-medium">Rabat:</div>
                             <div className="col-span-2">{coupon.discountValue}%</div>
 
                             <div className="font-medium">Status:</div>
                             <div className="col-span-2">
                                 <span className={`px-2 py-1 rounded text-white ${coupon.isActive ? 'bg-green-500' : 'bg-red-500'}`}>
-                                    {coupon.isActive ? 'Active' : 'Inactive'}
+                                    {coupon.isActive ? 'Aktywny' : 'Nieaktywny'}
                                 </span>
                             </div>
                         </div>
 
-                        <h2 className="text-lg font-semibold mb-2 mt-6">Coupon Image</h2>
+                        <h2 className="text-lg font-semibold mb-2 mt-6">Obraz kuponu</h2>
                         {coupon.imageId && coupon.imageUrl ? (
                             <div className="border rounded p-2 bg-gray-50">
                                 <img
@@ -115,16 +109,16 @@ const CouponDetailPage: React.FC = () => {
                                 />
                             </div>
                         ) : (
-                            <p className="text-gray-500 italic">No image associated with this coupon</p>
+                            <p className="text-gray-500 italic">Brak przypisanego obrazu do tego kuponu.</p>
                         )}
                     </div>
 
                     <div>
-                        <h2 className="text-lg font-semibold mb-2">Description</h2>
-                        <p className="mb-4 whitespace-pre-wrap">{coupon.description || 'No description provided.'}</p>
+                        <h2 className="text-lg font-semibold mb-2">Opis</h2>
+                        <p className="mb-4 whitespace-pre-wrap">{coupon.description || 'Brak opisu.'}</p>
 
-                        <h2 className="text-lg font-semibold mb-2">Terms and Conditions</h2>
-                        <p className="whitespace-pre-wrap">{coupon.termsAndConditions || 'No terms and conditions specified.'}</p>
+                        <h2 className="text-lg font-semibold mb-2">Regulamin</h2>
+                        <p className="whitespace-pre-wrap">{coupon.termsAndConditions || 'Brak określonego regulaminu.'}</p>
                     </div>
                 </div>
             </div>

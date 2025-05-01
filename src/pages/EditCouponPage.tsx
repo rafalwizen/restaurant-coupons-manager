@@ -28,10 +28,10 @@ const EditCouponPage: React.FC = () => {
                 if (response.success) {
                     setCoupon(response.data as CouponDetail);
                 } else {
-                    setError(response.message || 'Failed to fetch coupon details');
+                    setError(response.message || 'Nie udało się pobrać szczegółów kuponu');
                 }
             } catch (err) {
-                setError('An error occurred while fetching coupon details');
+                setError('Wystąpił błąd podczas pobierania szczegółów kuponu');
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -48,18 +48,18 @@ const EditCouponPage: React.FC = () => {
             setIsSubmitting(true);
             setError(null);
 
-            // Create update object
+            // Tworzenie obiektu aktualizacji
             const updateData: CouponUpdate = { ...values };
 
             const response = await couponService.updateCoupon(parseInt(id), updateData);
             if (response.success) {
-                showToast('Coupon updated successfully', 'success');
+                showToast('Kupon został zaktualizowany pomyślnie', 'success');
                 navigate('/admin/coupons');
             } else {
-                setError(response.message || 'Failed to update coupon');
+                setError(response.message || 'Nie udało się zaktualizować kuponu');
             }
         } catch (err) {
-            setError('An error occurred while updating the coupon');
+            setError('Wystąpił błąd podczas aktualizacji kuponu');
             console.error(err);
         } finally {
             setIsSubmitting(false);
@@ -68,18 +68,18 @@ const EditCouponPage: React.FC = () => {
 
     if (loading) return <LoadingSpinner />;
     if (error && !coupon) return <ErrorDisplay message={error} />;
-    if (!coupon) return <ErrorDisplay message="Coupon not found" />;
+    if (!coupon) return <ErrorDisplay message="Kupon nie został znaleziony" />;
 
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="bg-white shadow-md rounded-lg p-6">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold">Edit Coupon</h1>
+                    <h1 className="text-2xl font-bold">Edytuj kupon</h1>
                     <Button
                         onClick={() => navigate('/admin/coupons')}
                         className="bg-gray-600 hover:bg-gray-700"
                     >
-                        Back to List
+                        Powrót do listy
                     </Button>
                 </div>
 

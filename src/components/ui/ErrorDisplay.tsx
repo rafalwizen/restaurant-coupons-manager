@@ -3,7 +3,7 @@ import React from 'react';
 interface ErrorDisplayProps {
     message: string;
     retry?: () => void;
-    className?: string; // <- Dodane wsparcie dla className
+    className?: string;
 }
 
 const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ message, retry, className }) => {
@@ -34,7 +34,7 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ message, retry, className }
                             onClick={retry}
                             className="mt-2 text-sm text-red-700 underline hover:text-red-800"
                         >
-                            Try again
+                            Spróbuj ponownie
                         </button>
                     )}
                 </div>

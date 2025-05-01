@@ -28,7 +28,7 @@ const LoginPage = () => {
         setError('');
 
         if (!username.trim() || !password.trim()) {
-            setError('Username and password are required');
+            setError('Nazwa użytkownika i hasło są wymagane');
             return;
         }
 
@@ -37,7 +37,7 @@ const LoginPage = () => {
             await login({ username, password });
             navigate(from, { replace: true });
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Login failed. Please try again.');
+            setError(err instanceof Error ? err.message : 'Logowanie nie powiodło się. Spróbuj ponownie.');
         } finally {
             setLoading(false);
         }
@@ -47,8 +47,8 @@ const LoginPage = () => {
         <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
             <div className="max-w-md w-full">
                 <div className="text-center mb-10">
-                    <h1 className="text-3xl font-bold text-primary-700">Restaurant Coupon Manager</h1>
-                    <p className="mt-2 text-gray-600">Sign in to access your account</p>
+                    <h1 className="text-3xl font-bold text-primary-700">Zarządzanie Kuponami Restauracyjnymi</h1>
+                    <p className="mt-2 text-gray-600">Zaloguj się, aby uzyskać dostęp do swojego konta</p>
                 </div>
 
                 <div className="bg-white p-8 rounded-lg shadow-md">
@@ -60,20 +60,20 @@ const LoginPage = () => {
 
                     <form onSubmit={handleSubmit}>
                         <FormInput
-                            label="Username"
+                            label="Nazwa użytkownika"
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            placeholder="Enter your username"
+                            placeholder="Wprowadź nazwę użytkownika"
                             required
                         />
 
                         <FormInput
-                            label="Password"
+                            label="Hasło"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Enter your password"
+                            placeholder="Wprowadź swoje hasło"
                             required
                         />
 
@@ -83,7 +83,7 @@ const LoginPage = () => {
                             isLoading={loading}
                             className="mt-4"
                         >
-                            Sign In
+                            Zaloguj się
                         </Button>
                     </form>
                 </div>

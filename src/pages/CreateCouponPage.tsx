@@ -20,13 +20,13 @@ const CreateCouponPage: React.FC = () => {
 
             const response = await couponService.createCoupon(values);
             if (response.success) {
-                showToast('Coupon created successfully', 'success');
+                showToast('Kupon został utworzony pomyślnie', 'success');
                 navigate('/admin/coupons');
             } else {
-                setError(response.message || 'Failed to create coupon');
+                setError(response.message || 'Nie udało się utworzyć kuponu');
             }
         } catch (err) {
-            setError('An error occurred while creating the coupon');
+            setError('Wystąpił błąd podczas tworzenia kuponu');
             console.error(err);
         } finally {
             setIsSubmitting(false);
@@ -37,12 +37,12 @@ const CreateCouponPage: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
             <div className="bg-white shadow-md rounded-lg p-6">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold">Create New Coupon</h1>
+                    <h1 className="text-2xl font-bold">Utwórz nowy kupon</h1>
                     <Button
                         onClick={() => navigate('/admin/coupons')}
                         className="bg-gray-600 hover:bg-gray-700"
                     >
-                        Back to List
+                        Powrót do listy
                     </Button>
                 </div>
 

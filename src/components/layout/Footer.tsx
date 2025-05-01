@@ -8,14 +8,14 @@ const Footer: React.FC = () => {
             <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row justify-between items-center">
                     <div className="text-gray-500 text-sm mb-4 md:mb-0">
-                        &copy; {currentYear} Restaurant Coupon Manager. All rights reserved.
+                        &copy; {currentYear} Menedżer Kuponów Restauracyjnych. Wszelkie prawa zastrzeżone.
                     </div>
                     <div className="flex space-x-4">
                         <a href="#" className="text-gray-500 hover:text-gray-700">
-                            Privacy Policy
+                            Polityka prywatności
                         </a>
                         <a href="#" className="text-gray-500 hover:text-gray-700">
-                            Terms of Service
+                            Regulamin
                         </a>
                     </div>
                 </div>

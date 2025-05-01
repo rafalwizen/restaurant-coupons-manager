@@ -55,37 +55,37 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
 
         // Name validation
         if (!values.name) {
-            newErrors.name = 'Name is required';
+            newErrors.name = 'Nazwa jest wymagana';
         } else if (values.name.length > 100) {
-            newErrors.name = 'Name must be less than 100 characters';
+            newErrors.name = 'Nazwa musi mieć mniej niż 100 znaków';
         }
 
         // Description validation
         if (values.description && values.description.length > 500) {
-            newErrors.description = 'Description must be less than 500 characters';
+            newErrors.description = 'Opis musi mieć mniej niż 500 znaków';
         }
 
         // Discount validation
         if (values.discountValue === undefined) {
-            newErrors.discountValue = 'Discount value is required';
+            newErrors.discountValue = 'Wartość rabatu jest wymagana';
         } else if (isNaN(Number(values.discountValue)) || Number(values.discountValue) < 0) {
-            newErrors.discountValue = 'Discount value must be a positive number';
+            newErrors.discountValue = 'Wartość rabatu musi być liczbą dodatnią';
         }
 
         // Date validations
         if (!values.validFrom) {
-            newErrors.validFrom = 'Valid from date is required';
+            newErrors.validFrom = 'Data rozpoczęcia ważności jest wymagana';
         }
 
         if (!values.validTo) {
-            newErrors.validTo = 'Valid to date is required';
+            newErrors.validTo = 'Data zakończenia ważności jest wymagana';
         } else if (values.validFrom && values.validTo && new Date(values.validFrom) >= new Date(values.validTo)) {
-            newErrors.validTo = 'Valid to date must be after valid from date';
+            newErrors.validTo = 'Data zakończenia musi być po dacie rozpoczęcia';
         }
 
         // Terms validation
         if (values.termsAndConditions && values.termsAndConditions.length > 1000) {
-            newErrors.termsAndConditions = 'Terms and conditions must be less than 1000 characters';
+            newErrors.termsAndConditions = 'Regulamin musi mieć mniej niż 1000 znaków';
         }
 
         setErrors(newErrors);
@@ -113,7 +113,7 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <FormInput
-                label="Name"
+                label="Nazwa"
                 name="name"
                 type="text"
                 value={values.name}
@@ -125,7 +125,7 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
 
             <div className="mt-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Coupon Image (optional)
+                    Obrazek kuponu (opcjonalnie)
                 </label>
                 <ImageSelector
                     selectedImageId={values.imageId}
@@ -135,7 +135,7 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
 
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Description
+                    Opis
                 </label>
                 <textarea
                     name="description"
@@ -151,7 +151,7 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
             </div>
 
             <FormInput
-                label="Discount Value (%)"
+                label="Wartość rabatu (%)"
                 name="discountValue"
                 type="number"
                 value={values.discountValue.toString()}
@@ -165,7 +165,7 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormInput
-                    label="Valid From"
+                    label="Ważny od"
                     name="validFrom"
                     type="datetime-local"
                     value={values.validFrom}
@@ -175,7 +175,7 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
                 />
 
                 <FormInput
-                    label="Valid To"
+                    label="Ważny do"
                     name="validTo"
                     type="datetime-local"
                     value={values.validTo}
@@ -187,7 +187,7 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
 
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Terms and Conditions
+                    Regulamin
                 </label>
                 <textarea
                     name="termsAndConditions"
@@ -212,7 +212,7 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
                     className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
                 <label htmlFor="isActive" className="ml-2 block text-sm text-gray-900">
-                    Active
+                    Aktywny
                 </label>
             </div>
 
@@ -221,7 +221,7 @@ const CouponForm: React.FC<CouponFormProps> = ({ initialValues, onSubmit, isSubm
                     type="submit"
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? 'Saving...' : (initialValues ? 'Update Coupon' : 'Create Coupon')}
+                    {isSubmitting ? 'Zapisywanie...' : (initialValues ? 'Aktualizuj kupon' : 'Utwórz kupon')}
                 </Button>
             </div>
         </form>
