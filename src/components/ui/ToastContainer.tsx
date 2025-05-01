@@ -55,14 +55,14 @@ const ToastContainer: React.FC = () => {
             {toasts.map((toast) => (
                 <div
                     key={toast.id}
-                    className={`max-w-xs ${getToastColor(toast.type)} text-white rounded-lg shadow-md overflow-hidden`}
+                    className={`max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl ${getToastColor(toast.type)} text-white rounded-lg shadow-md overflow-hidden`}
                     role="alert"
                 >
                     <div className="flex p-4">
                         <div className="flex-shrink-0">
                             {getToastIcon(toast.type)}
                         </div>
-                        <div className="ml-3 w-0 flex-1">
+                        <div className="ml-3 flex-1">
                             <p className="text-sm font-medium">{toast.message}</p>
                         </div>
                         <div className="ml-4 flex-shrink-0 flex">
