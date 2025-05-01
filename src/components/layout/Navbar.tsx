@@ -13,20 +13,19 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <nav className="bg-blue-700 text-white shadow-md">
+        <nav className="bg-primary-700 text-white shadow-md">
             <div className="container mx-auto px-4 py-3 flex justify-between items-center">
                 <Link to="/" className="text-xl font-bold">Restaurant Coupons</Link>
 
                 <div className="hidden sm:flex items-center space-x-4">
-                    <Link to="/" className="hover:text-blue-200">Home</Link>
+                    <Link to="/" className="hover:text-secondary">Home</Link>
 
                     {isLoggedIn && user ? (
                         <>
-                            {/* Only show for admin users */}
                             {user.role === 'ADMIN' && (
                                 <>
-                                    <Link to="/admin/coupons" className="hover:text-blue-200">Manage Coupons</Link>
-                                    <Link to="/admin/images" className="hover:text-blue-200">Manage Images</Link>
+                                    <Link to="/admin/coupons" className="hover:text-secondary">Manage Coupons</Link>
+                                    <Link to="/admin/images" className="hover:text-secondary">Manage Images</Link>
                                 </>
                             )}
 
@@ -34,7 +33,7 @@ const Navbar: React.FC = () => {
                                 <span className="text-sm">Welcome, {user.username}</span>
                                 <Button
                                     onClick={handleLogout}
-                                    className="bg-red-600 hover:bg-red-700"
+                                    className="bg-primary-900 hover:bg-primary-800"
                                 >
                                     Logout
                                 </Button>
@@ -51,7 +50,7 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center sm:hidden">
                     <button
                         type="button"
-                        className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+                        className="inline-flex items-center justify-center p-2 rounded-md text-muted-text hover:text-white hover:bg-muted-hover focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
                         aria-controls="mobile-menu"
                         aria-expanded="false"
                     >
@@ -75,12 +74,12 @@ const Navbar: React.FC = () => {
                 </div>
             </div>
 
-            {/* Mobile menu, toggle classes based on menu state */}
+            {/* Mobile menu */}
             <div className="sm:hidden" id="mobile-menu">
                 <div className="pt-2 pb-3 space-y-1">
                     <Link
                         to="/"
-                        className="border-transparent text-gray-200 hover:bg-blue-800 block pl-3 pr-4 py-2 text-base font-medium"
+                        className="border-transparent text-muted-text hover:bg-primary-800 block pl-3 pr-4 py-2 text-base font-medium"
                     >
                         Home
                     </Link>
@@ -91,13 +90,13 @@ const Navbar: React.FC = () => {
                                 <>
                                     <Link
                                         to="/admin/coupons"
-                                        className="border-transparent text-gray-200 hover:bg-blue-800 block pl-3 pr-4 py-2 text-base font-medium"
+                                        className="border-transparent text-muted-text hover:bg-primary-800 block pl-3 pr-4 py-2 text-base font-medium"
                                     >
                                         Manage Coupons
                                     </Link>
                                     <Link
                                         to="/admin/images"
-                                        className="border-transparent text-gray-200 hover:bg-blue-800 block pl-3 pr-4 py-2 text-base font-medium"
+                                        className="border-transparent text-muted-text hover:bg-primary-800 block pl-3 pr-4 py-2 text-base font-medium"
                                     >
                                         Manage Images
                                     </Link>
@@ -105,10 +104,10 @@ const Navbar: React.FC = () => {
                             )}
 
                             <div className="px-4 py-2">
-                                <div className="text-sm text-gray-200 mb-2">Welcome, {user.username}</div>
+                                <div className="text-sm text-muted-text mb-2">Welcome, {user.username}</div>
                                 <Button
                                     onClick={handleLogout}
-                                    className="bg-red-600 hover:bg-red-700 w-full"
+                                    className="bg-danger hover:bg-danger-dark w-full"
                                 >
                                     Logout
                                 </Button>
@@ -124,6 +123,7 @@ const Navbar: React.FC = () => {
                 </div>
             </div>
         </nav>
+
     );
 };
 

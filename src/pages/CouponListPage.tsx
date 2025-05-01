@@ -26,7 +26,6 @@ const CouponListPage: React.FC = () => {
     const navigate = useNavigate();
     const { showToast } = useToast();
 
-    // Fetch coupons on initial load and when params change
     useEffect(() => {
         const fetchCoupons = async () => {
             try {
@@ -92,7 +91,6 @@ const CouponListPage: React.FC = () => {
         }
     };
 
-    // Filter coupons based on search term
     const filteredCoupons = coupons.filter(coupon =>
         coupon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         coupon.discountValue.toString().includes(searchTerm)
@@ -104,7 +102,7 @@ const CouponListPage: React.FC = () => {
                 <h1 className="text-2xl font-bold">Coupon Management</h1>
                 <Button
                     onClick={() => navigate('/admin/coupons/new')}
-                    className="bg-green-600 hover:bg-green-700"
+                    className="bg-primary-600 hover:bg-primary-700"
                 >
                     Add New Coupon
                 </Button>
@@ -176,19 +174,19 @@ const CouponListPage: React.FC = () => {
                                         <td className="py-2 px-4 border-b flex gap-2">
                                             <Button
                                                 onClick={() => navigate(`/admin/coupons/${coupon.id}`)}
-                                                className="bg-blue-600 hover:bg-blue-700"
+                                                className="bg-primary-500 hover:bg-primary-700"
                                             >
                                                 View
                                             </Button>
                                             <Button
                                                 onClick={() => navigate(`/admin/coupons/${coupon.id}/edit`)}
-                                                className="bg-yellow-600 hover:bg-yellow-700"
+                                                className="bg-primary-500 hover:bg-primary-600"
                                             >
                                                 Edit
                                             </Button>
                                             <Button
                                                 onClick={() => openDeleteDialog(coupon.id)}
-                                                className="bg-red-600 hover:bg-red-700"
+                                                className="bg-primary-500 hover:bg-primary-800"
                                             >
                                                 Delete
                                             </Button>
@@ -210,7 +208,7 @@ const CouponListPage: React.FC = () => {
                         <Button
                             onClick={() => handlePageChange(Math.max(0, params.page! - 1))}
                             disabled={params.page === 0}
-                            className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400"
+                            className="bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300"
                         >
                             Previous
                         </Button>
@@ -218,7 +216,7 @@ const CouponListPage: React.FC = () => {
                         <Button
                             onClick={() => handlePageChange(params.page! + 1)}
                             disabled={filteredCoupons.length < params.size!}
-                            className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400"
+                            className="bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300"
                         >
                             Next
                         </Button>
