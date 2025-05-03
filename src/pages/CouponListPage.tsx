@@ -22,38 +22,37 @@ const CouponListPage: React.FC = () => {
     });
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [couponToDelete, setCouponToDelete] = useState<number | null>(null);
+    const [refreshing, setRefreshing] = useState(false);
 
     const navigate = useNavigate();
     const { showToast } = useToast();
 
     useEffect(() => {
-        const fetchCoupons = async () => {
-            try {
-                setLoading(true);
-                setError(null);
-                const response = await couponService.getCoupons(params);
-                if (response.success) {
-                    setCoupons(response.data as CouponSummary[]);
-                } else {
-                    setError(response.message || 'Nie udało się pobrać listy kuponów.');
-                }
-            } catch (err) {
-                setError('Wystąpił błąd podczas pobierania kuponów.');
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchCoupons();
     }, [params]);
 
-    const handleSort = (field: string) => {
-        setParams(prevParams => ({
-            ...prevParams,
-            sortBy: field,
-            direction: prevParams.sortBy === field && prevParams.direction === 'asc' ? 'desc' : 'asc'
-        }));
+    const fetchCoupons = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const response = await couponService.getCoupons(params);
+            if (response.success) {
+                setCoupons(response.data as CouponSummary[]);
+            } else {
+                setError(response.message || 'Nie udało się pobrać listy kuponów.');
+            }
+        } catch (err) {
+            setError('Wystąpił błąd podczas pobierania kuponów.');
+            console.error(err);
+        } finally {
+            setLoading(false);
+            setRefreshing(false);
+        }
+    };
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        fetchCoupons();
     };
 
     const handlePageChange = (newPage: number) => {
@@ -96,101 +95,111 @@ const CouponListPage: React.FC = () => {
         coupon.discountValue.toString().includes(searchTerm)
     );
 
+    if (loading && !refreshing) {
+        return <LoadingSpinner />;
+    }
+
+    if (error) {
+        return <ErrorDisplay message={error} />;
+    }
+
     return (
-        <div className="container mx-auto px-4 py-8">
-            <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold">Zarządzanie kuponami</h1>
-                <Button onClick={() => navigate('/admin/coupons/new')}>
-                    Dodaj nowy kupon
-                </Button>
+        <div className="bg-gray-100 min-h-screen pb-8">
+            <div className="container mx-auto px-4 pt-8">
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-2xl font-bold">Zarządzanie kuponami</h1>
+                    <Button onClick={() => navigate('/admin/coupons/new')}>
+                        Dodaj nowy kupon
+                    </Button>
+                </div>
             </div>
 
-            <div className="mb-4">
-                <input
-                    type="text"
-                    placeholder="Szukaj kuponów..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full p-2 border rounded"
-                />
-            </div>
+            <div className="container mx-auto px-4 py-6">
+                <div className="mb-4">
+                    <input
+                        type="text"
+                        placeholder="Szukaj kuponów..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-blue-200 focus:border-blue-500"
+                    />
+                </div>
 
-            {loading && <LoadingSpinner />}
-            {error && <ErrorDisplay message={error} />}
+                {filteredCoupons.length === 0 && !loading ? (
+                    <div className="bg-white rounded-lg shadow-md p-8 text-center">
+                        <p className="text-gray-600 text-lg">Nie znaleziono kuponów.</p>
+                        <button
+                            onClick={handleRefresh}
+                            className="mt-4 text-blue-600 font-medium flex items-center justify-center mx-auto"
+                        >
+                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Odśwież
+                        </button>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {filteredCoupons.map(coupon => (
+                            <div key={coupon.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                                {coupon.imageUrl && (
+                                    <div className="h-48 overflow-hidden">
+                                        <img
+                                            src={coupon.imageUrl}
+                                            alt={coupon.name}
+                                            className="w-full h-full object-cover"
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).style.display = 'none';
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                                <div className="p-4">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <h2 className="text-xl font-semibold text-gray-800 line-clamp-2">{coupon.name}</h2>
+                                        <div className="bg-primary-700 text-white font-bold rounded-md px-3 py-1 text-sm flex flex-col items-center">
+                                            <span className="text-lg">{coupon.discountValue}%</span>
+                                            <span className="text-xs">OFF</span>
+                                        </div>
+                                    </div>
 
-            {!loading && !error && (
-                <>
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white border border-gray-200">
-                            <thead>
-                            <tr>
-                                <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('id')}>
-                                    ID {params.sortBy === 'id' && (params.direction === 'asc' ? '↑' : '↓')}
-                                </th>
-                                <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('name')}>
-                                    Nazwa {params.sortBy === 'name' && (params.direction === 'asc' ? '↑' : '↓')}
-                                </th>
-                                <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('discountValue')}>
-                                    Rabat {params.sortBy === 'discountValue' && (params.direction === 'asc' ? '↑' : '↓')}
-                                </th>
-                                <th className="py-2 px-4 border-b">Akcje</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {filteredCoupons.length > 0 ? (
-                                filteredCoupons.map(coupon => (
-                                    <tr key={coupon.id} className="hover:bg-gray-50">
-                                        <td className="py-2 px-4 border-b">{coupon.id}</td>
-                                        <td className="py-2 px-4 border-b">
-                                            <div className="flex items-center">
-                                                {coupon.imageId && (
-                                                    <div className="mr-2 w-10 h-10 flex-shrink-0">
-                                                        <img
-                                                            src={`/api/images/${coupon.imageId}/content`}
-                                                            alt={coupon.name}
-                                                            className="w-10 h-10 object-cover rounded"
-                                                            onError={(e) => {
-                                                                (e.target as HTMLImageElement).style.display = 'none';
-                                                            }}
-                                                        />
-                                                    </div>
-                                                )}
-                                                {coupon.name}
-                                            </div>
-                                        </td>
-                                        <td className="py-2 px-4 border-b">{coupon.discountValue}%</td>
-                                        <td className="py-2 px-4 border-b flex gap-2">
-                                            <Button onClick={() => navigate(`/admin/coupons/${coupon.id}`)}>
-                                                Podgląd
-                                            </Button>
-                                            <Button onClick={() => navigate(`/admin/coupons/${coupon.id}/edit`)}>
+                                    <div className="flex justify-between items-center mt-4">
+                                        <Button
+                                            onClick={() => navigate(`/admin/coupons/${coupon.id}`)}
+                                        >
+                                            Szczegóły
+                                        </Button>
+
+                                        <div className="flex gap-2">
+                                            <Button
+                                                onClick={() => navigate(`/admin/coupons/${coupon.id}/edit`)}
+                                            >
                                                 Edytuj
                                             </Button>
-                                            <Button onClick={() => openDeleteDialog(coupon.id)}>
+                                            <Button
+                                                onClick={() => openDeleteDialog(coupon.id)}
+                                            >
                                                 Usuń
                                             </Button>
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan={4} className="py-4 px-4 text-center">
-                                        Nie znaleziono kuponów.
-                                    </td>
-                                </tr>
-                            )}
-                            </tbody>
-                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
+                )}
 
-                    <div className="mt-4 flex justify-between items-center">
+                <div className="mt-6 flex justify-center">
+                    <div className="inline-flex rounded-md shadow-sm">
                         <Button
                             onClick={() => handlePageChange(Math.max(0, params.page! - 1))}
                             disabled={params.page === 0}
                         >
                             Poprzednia
                         </Button>
-                        <span>Strona {params.page! + 1}</span>
+                        <div className="px-4 py-2 text-sm font-medium text-primary-500 bg-primary-50 border-t border-b border-gray-300">
+                            Strona {params.page! + 1}
+                        </div>
                         <Button
                             onClick={() => handlePageChange(params.page! + 1)}
                             disabled={filteredCoupons.length < params.size!}
@@ -198,8 +207,8 @@ const CouponListPage: React.FC = () => {
                             Następna
                         </Button>
                     </div>
-                </>
-            )}
+                </div>
+            </div>
 
             <ConfirmationDialog
                 isOpen={deleteDialogOpen}

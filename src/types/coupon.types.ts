@@ -3,6 +3,7 @@ export interface CouponSummary {
     name: string;
     discountValue: number;
     imageId?: number;
+    imageUrl?: string;
 }
 
 export interface CouponDetail {
