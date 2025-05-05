@@ -26,7 +26,7 @@ export const couponService = {
     getCouponById: async (id: number): Promise<ApiResponse<CouponDetail>> => {
         return apiRequest<CouponDetail>({
             method: 'GET',
-            url: `/coupons/${id}`,
+            url: `/admin/coupons/${id}`,
         });
     },
 
